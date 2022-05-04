@@ -1,6 +1,10 @@
+import Home from "./pages/Home";
+
 const Main = () => {
     return (
-        <div>Testing</div>
+        <div>
+            <Home/>
+        </div>
     )
 }
 
