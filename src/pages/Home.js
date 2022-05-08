@@ -9,7 +9,6 @@ class Home extends Component{
                 <React.Fragment>
                   <Hero/>
                   <Featured/>
-                  <CTASection/>
                 </React.Fragment>);    
     }
 }

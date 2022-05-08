@@ -1,9 +1,13 @@
-import Home from "./pages/Home";
+
+import MainRouter from "./MainRouter";
+import { BrowserRouter } from "react-router-dom";
 
 const Main = () => {
     return (
         <div>
-            <Home/>
+            <BrowserRouter>
+                <MainRouter/>
+            </BrowserRouter>
         </div>
     )
 }
