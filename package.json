@@ -10,13 +10,18 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
+    "@truffle/hdwallet-provider": "^2.0.8",
     "dotenv": "^16.0.0",
+    "fs-extra": "^10.1.0",
+    "ganache-cli": "^6.12.2",
     "mocha": "^10.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "solc": "^0.8.13",
     "web-vitals": "^2.1.4",
+    "web3": "^1.7.3",
     "web3.storage": "^4.2.0"
   },
   "scripts": {
