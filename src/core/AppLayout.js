@@ -27,7 +27,7 @@ export default function AppLayout(props) {
   //this.context.router.route.location.pathname
   //alert(JSON.stringify(props));
   const navigation = [
-    { name: 'My lands', href: '#', current: window.location.pathname === "/" },
+    { name: 'My lands', href: '/dashboard', current: window.location.pathname === "/dashboard" },
     { name: 'Explore', href: '#', current: window.location.pathname === "/lands" },
     { name: 'Add land', href: '/land/add', current: window.location.pathname === "/land/add"}
   ]
