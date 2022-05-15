@@ -18,7 +18,27 @@ beforeEach(async () => {
 });
 
 describe('Landder',async() =>{
-    it("starts running",() => {
+    it("can be deployed",() => {
         assert.ok(accounts);
+    });
+
+    it("marks caller as the owner of land", () => {
+
+    });
+
+    it("holds the added land", () => {
+
+    });
+
+    it("requires payement to register a land",() => {
+
+    });
+
+    it("adds landmark", () => {
+
+    });
+
+    it("retrieves landmark", () => {
+
     });
 });
