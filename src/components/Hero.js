@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import LandderImg from "../res/img/landder.png";
+import FromHyperLedgeImg from "../res/img/buildings.png";
 
 const navigation = [
     { name: 'Lands', href: '#' },
