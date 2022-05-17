@@ -81,7 +81,7 @@ describe('Landder',() =>{
         }        
     });
 
-    it("requires owner to add landmark", async() => {
+    it("requires to be owner to add landmark", async() => {
         try{
             await land.methods.addLandMark("32982899328","328983928").send({
                 from : accounts[0],
