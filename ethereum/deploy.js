@@ -16,14 +16,18 @@ const provider = new HDWalletProvider(
 const web3 = new Web3(provider);
 
 const deploy = async() => {
+    try{
     const accounts = await web3.eth.getAccounts();
-    console.log("Attempting to deploy from account", accounts[0]);
+    console.log("Attempting to deploy from account", accounts[0],compiledLandder.evm.bytecode.object);
 
-    const result = await new web3.eth.Contract(JSON.parse(compiledLandder.interface))
-                            .deploy({data : compiledLandder.byteCode})
+    const result = await new web3.eth.Contract(compiledLandder.abi)
+                            .deploy({data : compiledLandder.evm.bytecode.object})
                             .send({gas : '1000000',from : accounts[0]});
-
+    console.log(result);
     provider.engine.stop();
+    }catch(ex){
+        console.log(ex);
+    }
 }
 
 deploy();
