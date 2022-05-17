@@ -22,8 +22,11 @@ const deploy = async() => {
 
     const result = await new web3.eth.Contract(compiledLandder.abi)
                             .deploy({data : compiledLandder.evm.bytecode.object})
-                            .send({gas : '1000000',from : accounts[0]});
-    console.log(result);
+                            .send({gas : '10000000',from : accounts[0]});
+    
+    console.log("Results\n-----");
+    console.log(result.options.address);
+    console.log("Results\n-----");
     provider.engine.stop();
     }catch(ex){
         console.log(ex);
