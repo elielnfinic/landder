@@ -24,9 +24,9 @@ const deploy = async() => {
                             .deploy({data : compiledLandder.evm.bytecode.object})
                             .send({gas : '10000000',from : accounts[0]});
     
-    console.log("Results\n-----");
-    console.log(result.options.address);
-    console.log("Results\n-----");
+    
+    console.log(`Contract deployed at ${result.options.address}`);
+
     provider.engine.stop();
     }catch(ex){
         console.log(ex);
