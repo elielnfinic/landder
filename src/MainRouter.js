@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 
 const MainRouter = () => {
-    return (
+    return ( 
         <div>
             <Routes>
                 <Route path="/" element={<Home/>}></Route>
