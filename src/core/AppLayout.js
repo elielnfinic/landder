@@ -8,15 +8,20 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import avatar from '../res/img/avatar.png';
 
 const user = {
-  name: 'Tom Cook',
-  email: 'x3267jhdyue78328723782378237823237848734783478',
+  name: '',
+  email: '',
   imageUrl: avatar
 }
 
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  //{ name: 'Your Profile', href: '#' },
+  //{ name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' , onClick : () => {
+    if(window.localStorage && localStorage.user_addr){
+      localStorage.removeItem("user_addr");
+      window.location.href = "/";
+    }
+  }},
 ]
 
 function classNames(...classes) {
@@ -24,13 +29,18 @@ function classNames(...classes) {
 }
 
 export default function AppLayout(props) {
-  //this.context.router.route.location.pathname
-  //alert(JSON.stringify(props));
   const navigation = [
     { name: 'My lands', href: '/dashboard', current: window.location.pathname === "/dashboard" },
     { name: 'Explore', href: '#', current: window.location.pathname === "/lands" },
     { name: 'Add land', href: '/land/add', current: window.location.pathname === "/land/add"}
   ]
+
+  //alert(localStorage.user_addr);
+
+  if(window.localStorage && !localStorage.user_addr){
+    window.location.href = "/";
+    return;
+  }
 
   return (
     <>
@@ -102,6 +112,7 @@ export default function AppLayout(props) {
                                 {({ active }) => (
                                   <a
                                     href={item.href}
+                                    onClick={item.onClick}
                                     className={classNames(
                                       active ? 'bg-gray-100' : '',
                                       'block px-4 py-2 text-sm text-gray-700'

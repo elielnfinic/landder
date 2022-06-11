@@ -12,6 +12,7 @@ export default function Dashboard(){
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+                    <div>Your address is <u>{localStorage.user_addr}</u></div>
                 </div>
             </header>
             <main>
