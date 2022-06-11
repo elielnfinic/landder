@@ -1,7 +1,52 @@
 import React,{Component} from "react";
 import AppLayout from "../core/AppLayout";
+import { Web3Storage } from "web3.storage";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const web3_storage_client = new Web3Storage({token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDBiNTlBMTg4NzdmYmRlMjhlZjUzNUJlQTg1MzBGMjlDYmFDMkY1QzAiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTE5MzM2MTA3NzMsIm5hbWUiOiJMYW5kZGVyIn0.3SUnQTcmfyQOasd8MbJJ3BdF6uc86n8EZrZLso4FkBY" });
 
 export default class AddLand extends Component{
+    state = {
+        latitude : "",
+        longitude : "",
+        document_url : "",
+        file_content : ""
+    };
+
+    setLatitudeLongitude = (val) => {
+        console.log(val);
+    }
+
+    addLand = async() => {
+        //alert( `Latitude ${this.state.latitude} et longitude ${this.state.longitude}`);
+        if(this.state.file_content){
+            try{
+                const res = await web3_storage_client.put(this.state.file_content);
+                this.setState({'document_url':res});
+                console.log(`File submitted successfully to the address ${res}`);
+            }catch(ex){
+                console.log(ex);
+            }            
+        }else{
+            alert("The file is not set yet");
+        }
+    }
+
+    fileChanged = (evt) => {
+        if (evt.target.files && evt.target.files[0]) {
+            //this.state.file_content = evt.target.files[0];
+            this.setState({file_content: evt.target.files});
+            /*let reader = new FileReader();
+            reader.onload = (e) => {
+                //console.log(e.target.result);
+                this.setState({file_content: e.target.result});
+            };
+            reader.readAsDataURL(evt.target.files[0]);*/
+        }
+    }
+
     render(){
         return (
             <AppLayout>
@@ -25,31 +70,32 @@ export default class AddLand extends Component{
                                                 className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                             >
                                                 <span>Upload one file</span>
-                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                                <input onChange={this.fileChanged} id="file-upload" name="file-upload" type="file" className="sr-only" />
                                             </label>
                                             <p className="pl-1">or drag and drop</p>
                                             </div>
                                             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                         </div>
                                         </div>
+                                        {this.state.document_url ? <div>File submitted to IPFS at address <a href={"https://" + this.state.document_url + ".ipfs.dweb.link"}>{this.state.document_url}</a></div> : <div></div>} 
                             </div>
                             <div className="mt-9">
                                 <h4 className="text-xl font-bold">Corners coordonates</h4>
                                 <div className="mb-3 mt-3">
                                     <div>Latitude</div>
-                                    <input type="number" className="border-gray-300 rounded w-full"/>
+                                    <input onChange={evt => {this.setState({'longitude': evt.target.value})}} type="number" className="border-gray-300 rounded w-full"/>
                                 </div>
 
                                 <div className="mb-3">
                                     <div>Longitude</div>
-                                    <input type="number" className="border-gray-300 rounded w-full"/>
+                                    <input onChange={(event) => {this.setState({'latitude' : event.target.value})}} type="number" className="border-gray-300 rounded w-full"/>
                                 </div>
                             </div>
 
 
                             <div className="md:grid md:grid-cols-1 md:gap-10">
                                 <div className="">
-                                    <button className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Add coordonates</button>
+                                    <button onClick={this.addLand} className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Add coordonates</button>
                                 </div>
                             </div>
 
