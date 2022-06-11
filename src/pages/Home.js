@@ -4,6 +4,12 @@ import Featured from "../components/Featured";
 import CTASection from "../components/CTASection";
 
 class Home extends Component{
+    componentDidMount(){
+      if(window.localStorage && localStorage.user_addr){
+        window.location.href = "/dashboard";
+      }
+    }
+
     render(){
         return (
                 <React.Fragment>

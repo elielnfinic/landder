@@ -4,11 +4,20 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import LandderImg from "../res/img/landder.png";
 import FromHyperLedgeImg from "../res/img/buildings.png";
+import {signInWithMetaMask, getAddresses} from "../web3";
+import {useNavigate} from "react-router-dom";
 
 const navigation = [
     { name: 'Lands', href: '#' },
     { name: 'How?', href: '#' }
 ]
+
+const connectUser = async () => {
+  await signInWithMetaMask();  
+  if(window.localStorage && localStorage.user_addr){
+    window.location.href = "/dashboard";
+  }
+}
 
 class Hero extends Component{
     render(){
@@ -52,7 +61,7 @@ class Hero extends Component{
                               {item.name}
                             </a>
                           ))}
-                          <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                          <a onClick={connectUser} href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Log in
                           </a>
                         </div>
@@ -122,7 +131,7 @@ class Hero extends Component{
                       <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                         <div className="rounded-md shadow">
                           <a
-                            href="/dashboard"
+                            onClick={connectUser}
                             className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                           >
                             Get started
