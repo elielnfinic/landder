@@ -2,6 +2,10 @@ import React,{Component} from "react";
 import AppLayout from "../core/AppLayout";
 import { Web3Storage } from "web3.storage";
 import dotenv from "dotenv";
+import PopupConfirmAddLand from "../components/PopupConfirmAddLand";
+import Landder from "../landder";
+import web3 from "../web3";
+import land_smart_contract from "../land";
 
 dotenv.config();
 
@@ -19,9 +23,11 @@ export default class AddLand extends Component{
         console.log(val);
     }
 
+    land = null;
+
     addLand = async() => {
         //alert( `Latitude ${this.state.latitude} et longitude ${this.state.longitude}`);
-        if(this.state.file_content){
+        /*if(this.state.file_content){
             try{
                 const res = await web3_storage_client.put(this.state.file_content);
                 this.setState({'document_url':res});
@@ -31,7 +37,23 @@ export default class AddLand extends Component{
             }            
         }else{
             alert("The file is not set yet");
-        }
+        }*/
+
+        const [land_addr] = await Landder.methods.createLand().send({
+            from : localStorage.user_addr,
+            gas : '1000000',
+            value : web3.utils.toWei('0.01','ether')
+        });
+
+        this.land = await land_smart_contract(land_addr);
+        
+        console.log(land_addr);
+    }
+
+    addCoordinates = async() => {
+        console.log(Landder);
+        const lands = await Landder.methods.getDeployedLands().call();
+        console.log(lands);
     }
 
     fileChanged = (evt) => {
@@ -49,16 +71,30 @@ export default class AddLand extends Component{
 
     render(){
         return (
-            <AppLayout>
+            <>
+                <AppLayout>
                 <header classname="bg-white">
                     <div className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
                         <h1 className="text-3xl font-bold text-gray-900">Add new land</h1>
                     </div>
                 </header>
                 <main>
+                    {/* <PopupConfirmAddLand open_popup={true}/> */}
+                    
                     <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px">
+                        <div className="md:grid md:grid-cols-1 md:gap-5">
+                                <label class="block text-sm font-medium text-gray-700">Start land registration to get its address</label>
+                                <div className="mt-3">
+                                    <button onClick={this.addLand} className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Pay 0.01 ETH to proceed</button>
+                                </div>
+                        </div>
+
+                        <div class="mb-5">
+
+                        </div>
+
                         <div className="mb-5">
-                                        <label className="block text-sm font-medium text-gray-700">Legal document</label>
+                                        <label className="block text-sm font-medium text-gray-700">Add the legal document</label>
                                         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                         <div className="space-y-1 text-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -79,6 +115,12 @@ export default class AddLand extends Component{
                                         </div>
                                         {this.state.document_url ? <div>File submitted to IPFS at address <a href={"https://" + this.state.document_url + ".ipfs.dweb.link"}>{this.state.document_url}</a></div> : <div></div>} 
                             </div>
+                            <div className="md:grid md:grid-cols-1 md:gap-10">
+                                <div className="">
+                                    <button onClick={this.addLand} className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Save my land</button>
+                                </div>
+                            </div>
+
                             <div className="mt-9">
                                 <h4 className="text-xl font-bold">Corners coordonates</h4>
                                 <div className="mb-3 mt-3">
@@ -95,7 +137,7 @@ export default class AddLand extends Component{
 
                             <div className="md:grid md:grid-cols-1 md:gap-10">
                                 <div className="">
-                                    <button onClick={this.addLand} className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Add coordonates</button>
+                                    <button onClick={this.addCoordinates} className="bg-blue-500 p-3 text-white hover:bg-blue-400 rounded">Add coordonates</button>
                                 </div>
                             </div>
 
@@ -107,9 +149,12 @@ export default class AddLand extends Component{
                         <div className="border-t border-gray-200" />
                     </div>
                 </div>
-
+                
                 
             </AppLayout>
+                
+            </>
+            
         );
     }
 }
